@@ -1,0 +1,103 @@
+---
+title: "Random6"
+author: "Alex Abos"
+date: "2/21/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Load packages
+library('ggplot2') # visualization
+library('ggthemes') # visualization
+library('scales') # visualization
+library('dplyr') # data manipulation
+library('mice') # imputation
+library('randomForest') # classification algorithm
+library('zoo')
+library('sjPlot')
+library('Hmisc')
+library('xgboost')
+library('reshape')
+```
+
+
+## Random6 Project
+
+Let's start with the competition! Both train and test datasets are txt file with | separator. 
+
+```{train, echo=FALSE}
+setwd('Random6')
+train=read.table("train.txt",sep="|",header=TRUE)
+```
+
+```{r, echo=FALSE}
+str(train)
+```
+
+Dimensions are 3351017 x 8
+Colum names: 
+"ID_Customer" = Identificador de cliente  
+"Cod_Prod" = Código de la modalidad de producto contratado      
+"Cod_Fecha" = Fecha de contratación de la modalidad de producto   
+"Socio_Demo_01" = Edad
+"Socio_Demo_02" = Antigüedad
+"Socio_Demo_03" = Ingresos
+"Socio_Demo_04" = Sexo (1: Hombre, 2: Mujer)
+"Socio_Demo_05" = Segmento (00: Particular | 01:Agricultor | 02:Comercio | 03:Autónomo)
+
+## Fixing Formats
+
+All variables are int except the Cod_Fecha
+
+```{r, echo=FALSE}
+train$Cod_Fecha<-as.Date(as.yearmon(train$Cod_Fecha))
+```
+
+## Inspecting variables
+
+```{r}
+# Use ggplot2 to visualize the relationship 
+ggplot(train, aes(x = Socio_Demo_03, fill = factor(Socio_Demo_04))) +
+  geom_bar(stat='count', position='dodge') +
+  scale_x_continuous(breaks=c(1:11)) +
+  labs(x = 'Ingresos') +
+  theme_few()
+```
+
+```{r}
+sjp.grpfrq(train$Socio_Demo_03, train$Socio_Demo_04)
+```
+
+```{r}
+ggplot(data=train,aes(x=Socio_Demo_01)) + 
+  geom_bar(alpha=0.75,fill="tomato",color="black") +
+  ggtitle("Age Distribution") 
+```
+
+
+
+Are there any missing values?
+```{r}
+sapply(train,function(x)any(is.na(x)))
+```
+
+No missing values :)
+
+Fer proves per pivotar
+
+```{r}
+train2<-train[1:50,]
+```
+
+```{r}
+train3<-cast(train2, Cod_Prod ~ ID_Customer)
+train4<-train3[,2:12] 
+a4<-a[,2:12]
+train4[a4]<-1
+train3[,2:12]<-train4
+```
+
