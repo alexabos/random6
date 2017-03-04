@@ -1,0 +1,35 @@
+---
+title: "Reto Microsoft Predictive Modelling Cajamar"
+author: "Alex Abos"
+date: "3/4/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Reto Microsoft Predictive Modelling
+
+Este informe presenta los pasos y ideas seguidas para completar el Reto Microsoft Predictive Modelling de Cajamar. 
+El objectivo de la competición es predecir el siguiente producto a contratar por los clientes.
+
+Se proporcionan dos datasets: Train.txt y Test.txt. 
+
+En el dataset de train hay 3351017 filas, que representan la compra de un producto (*Cod_Prod*) llevado a cabo por un customer (*ID_Customer*). En cada entrada se incluyen los datos demográficos del comprador y la fecha de compra. 
+En el dataset de test hay 
+
+
+
+
+Desglosando las demográficas, la información que proporcionan es la siguiente:
+*Socio_Demo_01* = Edad
+*Socio_Demo_02* = Antigüedad
+*Socio_Demo_03* = Ingresos
+*Socio_Demo_04* = Sexo (1: Hombre, 2: Mujer)
+*Socio_Demo_05* = Segmento (00: Particular | 01:Agricultor | 02:Comercio | 03:Autónomo)
+
+En el dataset de test hay 228.435 clientes únicos, a los que se les debe asignar a cada uno de ellos un único producto (siguiente producto a contratar).
+
+
+

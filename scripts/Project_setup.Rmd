@@ -22,6 +22,8 @@ library('sjPlot')
 library('Hmisc')
 library('xgboost')
 library('reshape')
+library('data.table')
+library('lubridate')
 ```
 
 
@@ -30,8 +32,13 @@ library('reshape')
 Let's start with the competition! Both train and test datasets are txt file with | separator. 
 
 ```{train, echo=FALSE}
-setwd('Random6')
+setwd('data')
 train=read.table("train.txt",sep="|",header=TRUE)
+
+data_train <- as.data.table(read.table(paste0(getwd(),'/data/train2.txt'), header = T, sep = '|', stringsAsFactors = F))
+
+data_test <- as.data.table(read.table(paste0(getwd(),'/data/test2.txt'), header = T, sep = '|', stringsAsFactors = F))
+
 ```
 
 ```{r, echo=FALSE}
